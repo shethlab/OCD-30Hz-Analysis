@@ -33,10 +33,23 @@ opt.maxfreq             = 2.5;
 opt.maxtime             = 6;
 opt.minnear             = 3;
 
-Freqs = 0:1/opt.WinLength:opt.sfreq/2;
+newversion = 0; % or 1
+
 channel = struct('data',[],'peaks',[],'aperiodics',[],'stats',[]);
+
+if newversion
+    long = 15;
+    slide = 1;
+    [TF, ts,Freqs] = windowedWelch(F,long,(long-slide)/long,2,1,500);
+
+else
+    Freqs = 0:1/opt.WinLength:opt.sfreq/2;
+    [TF, ts] = SPRiNT_stft(F,opt);
+end
+
+
 % Compute short-time Fourier transform
-[TF, ts] = SPRiNT_stft(F,opt);
+
 outputStruct = struct('opts',opt,'freqs',Freqs,'channel',channel);
 % Parameterize STFTs
 s_data = SPRiNT_specparam_matlab(TF,outputStruct.freqs,outputStruct.opts,ts);

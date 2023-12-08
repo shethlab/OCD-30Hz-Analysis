@@ -1,89 +1,44 @@
 %% Main Analysis Function
 % Load Directory: include 4 folders labeled by date (see below file
 % organization) and include analysis_v2 file and TextGrid in the folder.
-close all
 directory = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/';
 correct = 1; %correct 30Hz Powers (toggle to 0 for raw power)
-version = '_v1';
+
 % Box Plot Figure Init.
 figure('units','normalized','outerposition',[0 0 1 1]);
 tiledlayout(5,4);
 stats_mat = zeros(5,4); % Init Stats Matrix for heatmap
 %% Rotate Through Dates
-for i = 5
-    switch i
-        case 1
+i = 1;
             fn = strcat(directory,'9-9-2022/aDBS012_2022-09-09_amplitude-analysis_v2.mat');
             tg = strcat(directory,'9-9-2022/aDBS012_2022-09-09_audio_amplitude.TextGrid');
-            svn = strcat(directory,'9-9-2022/datafile.mat');
-        case 2
-            fn = strcat(directory,'9-19-2022/aDBS012_2022-09-19_amplitude-analysis_v2.mat');
-            tg = strcat(directory,'9-19-2022/aDBS012_2022-09-19_audio_amplitude.TextGrid');
-            svn = strcat(directory,'9-19-2022/datafile.mat');
-        case 3
-            fn = strcat(directory,'10-04-2022/aDBS012_2022-10-04_amplitude-analysis_v2.mat');
-            tg = strcat(directory,'10-04-2022/aDBS012_2022_10_04_audio_amplitude.TextGrid');
-            svn = strcat(directory,'10-04-2022/datafile.mat');
-        case 4
-            fn = strcat(directory,'11-15-2022/aDBS012_2022-11-15_amplitude-analysis_v2.mat');
-            tg = strcat(directory,'11-15-2022/aDBS012_2022-11-15_audio_amplitude.TextGrid');
-            svn = strcat(directory,'11-15-2022/datafile.mat');
-        case 5
-            fn = strcat(directory,'02-27-2023/Expt1/aDBS012_2023-02-27_amplitude-analysis_v2.mat');
-            tg = strcat(directory,'02-27-2023/Expt1/Experiment1.TextGrid');
-            svn = strcat(directory,'02-27-2023/Expt1/datafile.mat');
-        case 6
-            fn = strcat(directory,'02-27-2023/Expt2/aDBS012_2023-02-27_amplitude-analysis_v2.mat');
-            tg = strcat(directory,'02-27-2023/Expt2/Experiment2.TextGrid');
-            svn = strcat(directory,'02-27-2023/Expt2/datafile.mat');
-        case 7
-            fn = strcat(directory,'02-27-2023/Expt4/aDBS012_2023-02-27_amplitude-analysis_v2.mat');
-            tg = strcat(directory,'02-27-2023/Expt4/Experiment4.TextGrid');
-            svn = strcat(directory,'02-27-2023/Expt4/datafile.mat');
-        case 8
-            fn = strcat(directory,'02-27-2023/Expt5/aDBS012_2023-02-27_amplitude-analysis_v2.mat');
-            tg = strcat(directory,'02-27-2023/Expt5/Experiment5.TextGrid');
-            svn = strcat(directory,'02-27-2023/Expt5/datafile.mat');
-
-
-    end
+            svn = strcat(directory,'9-9-2022/vcvsdatafile.mat');
+        
     load(fn);
     pows = {};
 
     %% Rotate Through Contacts
-    for j = 1:4
-        figpos = 4*(j-1)+i;
+    for j = 1:2
+        figpos = 2*(j-1)+i;
         datelabel = extractBetween(fn,'aDBS012_','_amplitude');
         switch j
             case 1
-                tlabel = strcat(datelabel,' ; Contact Left mOFC');
-                tdsig = amp_data.lfp(1).combinedDataTable.TD_key2;
+                tlabel = strcat(datelabel,' ; Contact Left VC/VS');
+                tdsig = amp_data.lfp(1).combinedDataTable.TD_key0;
                 t0 = amp_data.ts1(1);
                 tstamps = amp_data.ts1;
-                svnspr = strrep(svn,'datafile',strcat('SPRiNT_LmOFC',version));
+                svnspr = strrep(svn,'datafile','SPRiNT_Lvcvs');
+
+
             case 2
-                tlabel = strcat(datelabel,' ; Contact Left lOFC');
-                tdsig = amp_data.lfp(1).combinedDataTable.TD_key3;
-                t0 = amp_data.ts1(1);
-                tstamps = amp_data.ts1;
-
-                svnspr = strrep(svn,'datafile',strcat('SPRiNT_LlOFC',version));
-
-            case 3
-                tlabel = strcat(datelabel,' ; Contact Right mOFC');
-                tdsig = amp_data.lfp(2).combinedDataTable.TD_key2;
+                tlabel = strcat(datelabel,' ; Contact Right VC/VS');
+                tdsig = amp_data.lfp(2).combinedDataTable.TD_key0;
                 t0 = amp_data.ts2(1);
                 tstamps = amp_data.ts2;
 
-                svnspr = strrep(svn,'datafile',strcat('SPRiNT_RmOFC',version));
+                svnspr = strrep(svn,'datafile','SPRiNT_Rvcvs');
 
-            case 4
-                tlabel = strcat(datelabel,' ; Contact Right lOFC');
-                tdsig = amp_data.lfp(2).combinedDataTable.TD_key3;
-                t0 = amp_data.ts2(1);
-                tstamps = amp_data.ts2;
-                svnspr = strrep(svn,'datafile',strcat('SPRiNT_RlOFC',version));
-                
+
         end
         %% Main Body
         try
@@ -93,11 +48,7 @@ for i = 5
             %tmax = amp_data.DBS_high_times(2,2);
             tdsig = tdsig(tstamps>=tmin); % Chop pre-0 signal
             [pwrs,times,tf,s_data] = correctedPowers(tdsig,tmin,[28 32],correct);
-            if i == 4 && j <3
-                inds = find(times<265 | times>571);
-                times = times(inds);
-                pwrs = pwrs(inds);%Removed a Packet Loss Segment for last date left hem
-            end
+
             save(svnspr,'s_data');
             %% Power Epoching
             powersHigh = [gatherInEpoch(pwrs,times,amp_data.DBS_high_times(1,:)); gatherInEpoch(pwrs,times,amp_data.DBS_high_times(2,:))];
@@ -123,7 +74,7 @@ for i = 5
             title(tlabel);
 
             %% Stats Mat
-            [~,p] = ttest2(powersHighDs,powersLowDs);
+            [~,p] = ranksum(powersHighDs,powersLowDs);
             stats_mat(j,i) = p;
             end
         catch
@@ -157,11 +108,11 @@ for i = 5
         pows(5).high_amp = amps;
         %% Box plot
         if i<5
-        nexttile(figpos+4);
+        nexttile(figpos+2);
         boxplot([spHigh,spLow],[repmat({'High'},length(spHigh),1);repmat({'Low'},length(spLow),1)]);
         title('Speech');
         %% Stats Mat
-        [~,p] = ttest2(spHigh,spLow);
+        [~,p] = ranksum(spHigh,spLow);
         stats_mat(5,i) = p;
         end
 
@@ -174,13 +125,12 @@ for i = 5
     stimdata.leftAmps = amp_data.amp_limits_left;
     stimdata.rightAmps = amp_data.amp_limits_right;
     stimdata.clinLeft = amp_data.clin_amp_left;
-    stimdata.clinRight = amp_data.clin_amp_right;
+    stim_data.clinRight = amp_data.clin_amp_right;
     if correct
         svn = strrep(svn,'datafile','datafile_corrected');
     end
-    svnfin = strrep(svn,'.mat',strcat(version,'.mat'));
-    save(svnfin,'pows','stimdata');
-end
+    save(svn,'pows','stimdata');
+
 
 %% Save Figure of boxplot and save stats mat
 
@@ -196,7 +146,7 @@ close all
 
 
 %% Heatmap of stats
-heatmap({'9-9-22','9-19-22','10-04-22','11-15-22'},{'Left mOFC', 'Left lOFC','Right mOFC','Right lOFC','Speech'},1-stats_mat); clim([0.95 1]);
+%heatmap({'9-9-22','9-19-22','10-04-22','11-15-22'},{'Left mOFC', 'Left lOFC','Right mOFC','Right lOFC','Speech'},1-stats_mat); clim([0.95 1]);
 
 
 

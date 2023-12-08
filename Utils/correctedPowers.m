@@ -6,8 +6,9 @@ w = 4;
 [~,~,~,tf]=spectrogram(sig,250*w,125*w,500,500);
 
 %% SPRiNT
-clearvars s_data
-SPRiNT_AmpTesting;
+
+    clearvars s_data
+    SPRiNT_AmpTesting;
 
 %% Corrected Powers
 for i = 1:length(s_data.SPRiNT.channel.data)
