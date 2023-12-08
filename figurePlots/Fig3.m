@@ -167,8 +167,8 @@ hold on;
 plot(pows(2).times,movavg(pows(2).value,"exponential",10),'LineStyle','-','Color','r','LineWidth',1.5);
 
 ylabel({'30 Hz Power', '(dB, 1/f Corrected)'})
-ylim([-10 10])
-yticks([-10,-5,0,5,10]);
+ylim([-7 7])
+yticks([-7,-3.5,0,3.5,7]);
 q = gca;
 q.XAxis.Visible = 'off';
 %h(4).FontSize = 14;
