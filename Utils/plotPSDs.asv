@@ -30,24 +30,14 @@ if fig_num ==4
     ii = 5;
 elseif fig_num ==3
     ii = 2;
-    low = (low1+low2+clin1)/3;
-    high = (high1+high2)/2;
 end
 
 for i = 1:ii
     switch i 
         case 1
-            if fig_num ==3
-                dat = low;
-            else
-                dat = low1;
-            end
+            dat = low1;
         case 2
-            if fig_num ==3
-                dat = high;
-            else
-                dat = high1;
-            end
+            dat = high1;
         case 3
             dat = low2;
         case 4
@@ -59,7 +49,7 @@ for i = 1:ii
         hold on;
         plot(ax(j),f1,dat(:,j),'Color',c(i,:),'LineWidth',1)
         hold on;
-        if i == ii
+        if i == 5
             switch j
                 case 1
                     title(ax(j),[hem,' VC/VS']);

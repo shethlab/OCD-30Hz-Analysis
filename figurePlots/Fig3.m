@@ -1,14 +1,15 @@
 close all;
 clear all;
 %% Load Files
-amp_analysis_file = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/9-9-2022/aDBS012_2022-09-09_amplitude-analysis_v2.mat';
-textgrid = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/9-9-2022/aDBS012_2022-09-09_audio_amplitude.TextGrid';
-psdfile = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/9-9-2022/aDBS012_2022-09-09_PSD-data_Left_v2.mat';
+load_dir = 'D:\Amplitude Data\Datafolder\Datafolder\';
+amp_analysis_file = [load_dir,'/aDBS012_2022-09-09_amplitude-analysis_v2.mat'];
+textgrid = [load_dir,'aDBS012_2022-09-09_audio_amplitude.TextGrid'];
+psdfile = [load_dir,'aDBS012_2022-09-09_PSD-data_Left_v2.mat'];
+fig_num = 3;
 
 
-
-power_datafile = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/9-9-2022/datafile_corrected_v1.mat';
-savedir = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/Figures/Figure 3/Version1/';
+power_datafile = [load_dir,'datafile_corrected_v1.mat'];
+savedir = 'D:\Amplitude Data\Fig3\';
 exp = 0;
 
 %% Load
@@ -188,7 +189,7 @@ saveas(fig2,strcat(savedir,'PanelA2.svg'));
 saveas(fig3,strcat(savedir,'PanelC.svg'));
 close all
 %% Panel D
-plotPSDs(psdfile,'Left');
+plotPSDs(psdfile,'Left',fig_num);
 saveas(gcf,strcat(savedir,'PanelD.svg'));
 
 

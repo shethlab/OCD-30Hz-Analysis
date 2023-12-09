@@ -1,4 +1,4 @@
-load('/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/9-9-2022/vcvsdatafile_corrected.mat');
+load([load_dir,'vcvsdatafile_corrected.mat']);
 data = pows(1).value;
 cat = pows(1).high_amp;
 inds = find(cat == 0 | cat == 1);
