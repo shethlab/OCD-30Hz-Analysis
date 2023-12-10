@@ -19,7 +19,7 @@ title([hem,channels{ch_input1}])
 ylabel('Frequency (Hz)')
 xlabel('seconds')
 colormap jet
-colorbar off
+colorbar 
 ax1.YLim = [1,upper_freq_lim];
 ax1.XLim = [0,t(end)];
 drawnow;

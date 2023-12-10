@@ -5,7 +5,7 @@ t = tiledlayout(4,4);
 %% 11/15 Data
 datafile = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/11-15-2022/datafile_corrected_v1.mat';
 psdfileleft = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/11-15-2022/aDBS012_2022-11-15_PSD-data_Left_v2.mat';
-psdfileright = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/11-15-2022/aDBS012_2022-11-15_PSD-data_Right_v2.mat';
+psdfileright = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/11-15-2022/aDBS012_2022-11-15_PSD-data_Left_v2.mat';
 
 load(datafile);
 
@@ -36,7 +36,7 @@ for i = 1:3
     hold on;
     plot(ax(1),f1,dat(:,3),'Color',c(i,:),'LineWidth',1)
     hold on;
-    if i == 5
+    if i == 3
 
 
         title(ax(1),['Left vlPFC']);
@@ -66,7 +66,7 @@ violins1 = violinplot(data,cat);
 q(1) = gca;
 q(1).FontSize = 14;
 q(1).XAxis.Visible = 'off';
-clearvars -except pows fig4 t ax q1 psdfileright
+clearvars -except pows fig4 t ax q1
 
 
 % right
@@ -96,7 +96,7 @@ for i = 1:3
     hold on;
     plot(ax(2),f1,dat(:,3),'Color',c(i,:),'LineWidth',1)
     hold on;
-    if i == 5
+    if i == 3
 
 
         title(ax(2),['Right vlPFC']);
@@ -131,7 +131,7 @@ clearvars -except fig4 t ax q
 %% 02/27 Data
 datafile = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/02-27-2023/Expt1/datafile_corrected_v1.mat';
 psdfileleft = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/02-27-2023/Expt1/aDBS012_2023-02-27_PSD-data_Left_v2.mat';
-psdfileright = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/02-27-2023/Expt1/aDBS012_2023-02-27_PSD-data_Right_v2.mat';
+psdfileright = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/02-27-2023/Expt1/aDBS012_2023-02-27_PSD-data_Left_v2.mat';
 load(datafile);
 
 %left
@@ -144,27 +144,33 @@ c = [31 195 255;...
     %0 38 255;...
     57 181 74]/255;
 upper_freq_lim = 55;
-ax(3) = nexttile;
+ax(2) = nexttile;
 hold on
 axis square
 box off
-for i = 1:2
+for i = 1:5
     switch i
         case 1
-            dat = (low1+low2+clin1)/3;
+            dat = low1;
         case 2
-            dat = (high1+high2)/2;
+            dat = high1;
+        case 3
+            dat = low2;
+        case 4
+            dat = high2;
+        case 5
+            dat = clin1;
     end
     hold on;
-    plot(ax(3),f1,dat(:,3),'Color',c(i,:),'LineWidth',1)
+    plot(ax(2),f1,dat(:,3),'Color',c(i,:),'LineWidth',1)
     hold on;
-    if i == 2
+    if i == 5
 
 
-        title(ax(3),['Left vlPFC']);
+        title(ax(2),['Left lOFC']);
 
-        ylabel(ax(3),'Power (dB)');
-        xlabel(ax(3),'Frequency (Hz)');
+        ylabel(ax(2),'Power (dB)');
+        xlabel(ax(2),'Frequency (Hz)');
     end
     box off
 
@@ -172,10 +178,10 @@ for i = 1:2
 end
 
 
-ax(3).XLim = [0,upper_freq_lim];
-xticks(ax(3),[0 10 20 30 40 50]);
-ax(3).FontSize = 14;
-legend(ax(3),{'No Talking','Talking'})
+ax(2).XLim = [0,upper_freq_lim];
+xticks(ax(2),[0 10 20 30 40 50]);
+ax(2).FontSize = 14;
+legend(ax(2),{'Low 1','High 1','Low 2', 'High 2','Clinical'})
 
 % Violins
 data = pows(2).value;
@@ -186,69 +192,10 @@ data = data(inds);
 cat = cat(inds);
 nexttile;
 violins1 = violinplot(data,cat);
-q(3) = gca;
-q(3).FontSize = 14;
-q(3).XAxis.Visible = 'off';
+q2 = gca;
+q2.FontSize = 14;
+q2.XAxis.Visible = 'off';
 
-clearvars -except fig4 t ax q pows psdfileright
-
-%Right
-load(psdfileright);
-% plot PSD
-c = [31 195 255;...
-    251 86 59;...
-    0 108 255;...
-    237 28 36;...
-    %0 38 255;...
-    57 181 74]/255;
-upper_freq_lim = 55;
-ax(4) = nexttile;
-hold on
-axis square
-box off
-for i = 1:2
-    switch i
-        case 1
-            dat = (low1+low2+clin1)/3;
-        case 2
-            dat = (high1+high2)/2;
-    end
-    hold on;
-    plot(ax(4),f1,dat(:,3),'Color',c(i,:),'LineWidth',1)
-    hold on;
-    if i == 2
-
-
-        title(ax(4),['Right vlPFC']);
-
-        ylabel(ax(4),'Power (dB)');
-        xlabel(ax(4),'Frequency (Hz)');
-    end
-    box off
-
-
-end
-
-
-ax(4).XLim = [0,upper_freq_lim];
-xticks(ax(4),[0 10 20 30 40 50]);
-ax(4).FontSize = 14;
-legend(ax(4),{'No Talking','Talking'})
-
-% Violins
-data = pows(2).value;
-cat = pows(2).high_amp;
-cat(cat==3)=1;
-inds = find(cat == 0 | cat == 1);
-data = data(inds);
-cat = cat(inds);
-nexttile;
-violins1 = violinplot(data,cat);
-q(4) = gca;
-q(4).FontSize = 14;
-q(4).XAxis.Visible = 'off';
 
 linkaxes(ax,'y');
-linkaxes(q,'y');
-
-saveas(gcf,'/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/Figures/Figure 4/')
+linkaxes([q1,q2],'y');
