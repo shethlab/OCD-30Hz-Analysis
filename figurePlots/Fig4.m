@@ -116,8 +116,8 @@ ax(2).FontSize = 14;
 legend(ax(2),{'Low','High','Clinical'})
 
 % Violins
-data = pows(2).value;
-cat = pows(2).high_amp;
+data = pows(4).value;
+cat = pows(4).high_amp;
 inds = find(cat == 0 | cat == 1);
 data = data(inds);
 cat = cat(inds);
@@ -236,8 +236,8 @@ ax(4).FontSize = 14;
 legend(ax(4),{'No Talking','Talking'})
 
 % Violins
-data = pows(2).value;
-cat = pows(2).high_amp;
+data = pows(4).value;
+cat = pows(4).high_amp;
 cat(cat==3)=1;
 inds = find(cat == 0 | cat == 1);
 data = data(inds);
@@ -251,4 +251,4 @@ q(4).XAxis.Visible = 'off';
 linkaxes(ax,'y');
 linkaxes(q,'y');
 
-saveas(gcf,'/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/Figures/Figure 4/')
+saveas(gcf,'/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/Figures/Figure 4/PanelA.svg')
