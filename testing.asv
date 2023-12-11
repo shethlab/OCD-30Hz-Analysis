@@ -1,16 +1,10 @@
 version_tag = {'_v1.mat','_v2.mat','_v3.mat'};
 includeclin = 0;
-control = 1;
+control = 0;
 nicole = 1;
-lowf = 31.5-1;
-highf = 31.5+1;
 
 if control
-    if nicole == 1 
-        dir = 'D:\Amplitude Data\DataFits\DataFits\02-27-2023\Expt1\';
-    else
-        dir = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/02-27-2023/Expt1/';
-    end
+    dir = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/02-27-2023/Expt1/';
 else
     if nicole == 1
         dir = 'D:\Amplitude Data\DataFits\DataFits\11-15-2022\'
@@ -35,7 +29,7 @@ for i = 1
 
     end
     figure('Renderer', 'painters', 'Position', [10 10 2000 800],'Color','w');
-    max_all = cell(2,1);
+    max_all = cell{2,1};
     for j = 1:2
         for k = 1
 
@@ -65,7 +59,7 @@ for i = 1
             avgpsd = mean(allpsd,1);
             avgaper = mean(allaper,1);
             
-            finds = find(s_data.Freqs>=lowf & s_data.Freqs<=highf);
+            finds = find(s_data.Freqs>=31.5-1 & s_data.Freqs<=31.5+1);
             frange = allpsd(:,finds)-avgaper(:,finds);
             max_all{j,1} = max(frange,[],2);
         
@@ -73,10 +67,8 @@ for i = 1
         hold on
         plot(s_data.Freqs,avgpsd,'Color',c(j,:));
         plot(s_data.Freqs,avgaper,'Color',c(j,:),'LineStyle',':');
-        ax = gca;
-        ax.YLim = [-70 -20];
         differ = avgpsd-avgaper;
-        finds = find(s_data.Freqs>=lowf & s_data.Freqs<=highf);
+        finds = find(s_data.Freqs>=31.5-1 & s_data.Freqs<=31.5+1);
 
         pwrs(j) = mean(differ(:,finds));
         max_pwr(j) = max(differ(:,finds));
@@ -92,25 +84,14 @@ end
 high = find(pows(1).high_amp==1);
 low = find(pows(1).high_amp==0);
 
-bw = 0.5;
 figure; 
-histogram(pows(1).value(high),'BinWidth',bw); 
+histogram(pows(1).value(high),'BinWidth',0.5); 
 hold on
-histogram(pows(1).value(low),'BinWidth',bw); 
+histogram(pows(1).value(low),'BinWidth',0.5); 
 legend('high','low')
-[h,p] = ttest2(pows(1).value(high),pows(1).value(low));
-title({'average power';['p=',num2str(p)]})
-mean(pows(1).value(high))
-mean(pows(1).value(low))
-
-figure;
-histogram(max_all{2},'BinWidth',bw); 
-hold on
-histogram(max_all{1},'BinWidth',bw); 
-legend('high','low')
-[h,p] = ttest2(max_all{2},max_all{1});
-title({'max power';['p=',num2str(p)]})
 
 
-mean(max_all{2})
-mean(max_all{1})
+
+
+
+
