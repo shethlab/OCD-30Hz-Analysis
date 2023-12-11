@@ -4,13 +4,17 @@
 close all
 directory = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/';
 correct = 1; %correct 30Hz Powers (toggle to 0 for raw power)
-version = '_v1';
+version = '_v4';
 % Box Plot Figure Init.
 figure('units','normalized','outerposition',[0 0 1 1]);
 tiledlayout(5,4);
 stats_mat = zeros(5,4); % Init Stats Matrix for heatmap
+
+centerf = 31;
+window = 3;
+frange = centerf+[-window/2,window/2];
 %% Rotate Through Dates
-for i = 5
+for i = 1:8
     switch i
         case 1
             fn = strcat(directory,'9-9-2022/aDBS012_2022-09-09_amplitude-analysis_v2.mat');
@@ -92,7 +96,11 @@ for i = 5
             tmin = 0;
             %tmax = amp_data.DBS_high_times(2,2);
             tdsig = tdsig(tstamps>=tmin); % Chop pre-0 signal
-            [pwrs,times,tf,s_data] = correctedPowers(tdsig,tmin,[28 32],correct);
+            if strcmp(version,'_v4')
+                [pwrs,times,tf,s_data] = correctedPowers(tdsig,tmin,frange,correct,1);
+            else
+                [pwrs,times,tf,s_data] = correctedPowers(tdsig,tmin,frange,correct,0);
+            end
             if i == 4 && j <3
                 inds = find(times<265 | times>571);
                 times = times(inds);
@@ -109,7 +117,7 @@ for i = 5
             hiinds = find((times>=amp_data.DBS_high_times(1,1) & times<=amp_data.DBS_high_times(1,2)) | (times>=amp_data.DBS_high_times(2,1) & times<=amp_data.DBS_high_times(2,2)));
             loinds = find((times>=amp_data.DBS_low_times(1,1) & times<=amp_data.DBS_low_times(1,2)) | (times>=amp_data.DBS_low_times(2,1) & times<=amp_data.DBS_low_times(2,2)));
             clininds = find((times>=amp_data.DBS_clin_times(1,1) & times<=amp_data.DBS_clin_times(1,2)) );
-            if amp_data.clin_amp_left == 0 && amp_data.clin_amp_right == 0
+            if (amp_data.clin_amp_left == 0 && amp_data.clin_amp_right == 0) | i == 5
                 amps(clininds) = 0;
             else
                 amps(clininds) = 3;
@@ -147,7 +155,7 @@ for i = 5
         hiinds = find((tms>=amp_data.DBS_high_times(1,1) & tms<=amp_data.DBS_high_times(1,2)) | (tms>=amp_data.DBS_high_times(2,1) & tms<=amp_data.DBS_high_times(2,2)));
         loinds = find((tms>=amp_data.DBS_low_times(1,1) & tms<=amp_data.DBS_low_times(1,2)) | (tms>=amp_data.DBS_low_times(2,1) & tms<=amp_data.DBS_low_times(2,2)));
         clininds = find((tms>=amp_data.DBS_clin_times(end,1) & tms<=amp_data.DBS_clin_times(end,2)) );
-        if amp_data.clin_amp_left == 0 && amp_data.clin_amp_right == 0
+        if (amp_data.clin_amp_left == 0 && amp_data.clin_amp_right == 0) | i == 5
             amps(clininds) = 0;
         else
             amps(clininds) = 3;
