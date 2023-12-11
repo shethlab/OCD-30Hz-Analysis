@@ -1,7 +1,7 @@
 close all;
 clear all;
 %% Load Files
-load_dir = 'D:\Amplitude Data\Datafolder\Datafolder\';
+load_dir = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/9-9-2022/';
 amp_analysis_file = [load_dir,'/aDBS012_2022-09-09_amplitude-analysis_v2.mat'];
 textgrid = [load_dir,'aDBS012_2022-09-09_audio_amplitude.TextGrid'];
 psdfile = [load_dir,'aDBS012_2022-09-09_PSD-data_Left_v2.mat'];
@@ -9,7 +9,7 @@ fig_num = 3;
 
 
 power_datafile = [load_dir,'datafile_corrected_v1.mat'];
-savedir = 'D:\Amplitude Data\Fig3\';
+savedir = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/Figures/Figure 3/Version1';
 exp = 0;
 
 %% Load

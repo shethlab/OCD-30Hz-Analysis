@@ -9,6 +9,7 @@ psdfileright = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/11-15-2022/aDBS012_2
 
 load(datafile);
 
+
 % left
 load(psdfileleft);
 % plot PSD
@@ -58,15 +59,17 @@ legend(ax(1),{'Low','High','Clinical'})
 % Violins
 data = pows(2).value;
 cat = pows(2).high_amp;
-inds = find(cat == 0 | cat == 1);
+time1 = stimdata.lowTimes(1,2);
+time2 = stimdata.lowTimes(2,2);
+inds = find((cat == 0 | cat == 1) & (pows(2).times<=time1 | pows(2).times>=time2));
 data = data(inds);
 cat = cat(inds);
 nexttile;
-violins1 = violinplot(data,cat);
+violins1 = violinplot(data,cat,'ShowMean',true);
 q(1) = gca;
 q(1).FontSize = 14;
 q(1).XAxis.Visible = 'off';
-clearvars -except pows fig4 t ax q1 psdfileright
+clearvars -except pows fig4 t ax q psdfileright stimdata
 
 
 % right
@@ -86,9 +89,9 @@ box off
 for i = 1:3
     switch i
         case 1
-            dat = low1;
+            dat = (low1+low2)/2;
         case 2
-            dat = high2;
+            dat = (high1+high2)/2;
         case 3
             dat = clin1;
             i = 5;
@@ -118,11 +121,12 @@ legend(ax(2),{'Low','High','Clinical'})
 % Violins
 data = pows(4).value;
 cat = pows(4).high_amp;
-inds = find(cat == 0 | cat == 1);
+
+inds = find((cat == 0 | cat == 1));
 data = data(inds);
 cat = cat(inds);
 nexttile;
-violins1 = violinplot(data,cat);
+violins1 = violinplot(data,cat,'ShowMean',true);
 q(2) = gca;
 q(2).FontSize = 14;
 q(2).XAxis.Visible = 'off';
@@ -180,12 +184,12 @@ legend(ax(3),{'No Talking','Talking'})
 % Violins
 data = pows(2).value;
 cat = pows(2).high_amp;
-cat(cat==3)=1;
+cat(cat==3)=0;
 inds = find(cat == 0 | cat == 1);
 data = data(inds);
 cat = cat(inds);
 nexttile;
-violins1 = violinplot(data,cat);
+violins1 = violinplot(data,cat,'ShowMean',true);
 q(3) = gca;
 q(3).FontSize = 14;
 q(3).XAxis.Visible = 'off';
@@ -238,16 +242,17 @@ legend(ax(4),{'No Talking','Talking'})
 % Violins
 data = pows(4).value;
 cat = pows(4).high_amp;
-cat(cat==3)=1;
+cat(cat==3)=0;
 inds = find(cat == 0 | cat == 1);
 data = data(inds);
 cat = cat(inds);
 nexttile;
-violins1 = violinplot(data,cat);
+violins1 = violinplot(data,cat,'ShowMean',true);
 q(4) = gca;
 q(4).FontSize = 14;
 q(4).XAxis.Visible = 'off';
 
+ylim(q,[-8,12])
 linkaxes(ax,'y');
 linkaxes(q,'y');
 

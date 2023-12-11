@@ -1,4 +1,4 @@
-function [pwrs,times,tf,s_data] = correctedPowers(sig,t0,frqs,correct)
+function [pwrs,times,tf,s_data] = correctedPowers(sig,t0,frqs,correct,calcmax)
 F = sig'; %sprint input
 
 %% Spectrogram
@@ -23,8 +23,11 @@ for i = 1:length(s_data.SPRiNT.channel.data)
 end
 
 frq = find(s_data.Freqs>=frqs(1) & s_data.Freqs<=frqs(2));
-
-pwrs = mean(powers(:,frq),2);
+if calcmax
+    pwrs = max(powers(:,frq),[],2);
+else
+    pwrs = mean(powers(:,frq),2);
+end
 
 
 end

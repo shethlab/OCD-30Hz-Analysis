@@ -40,6 +40,7 @@ channel = struct('data',[],'peaks',[],'aperiodics',[],'stats',[]);
 if newversion
     long = 15;
     slide = 1;
+    error;
     [TF, ts,Freqs] = windowedWelch(F,long,(long-slide)/long,2,1,500);
 
 else
