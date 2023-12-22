@@ -1,8 +1,10 @@
-files = {'/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/9-9-2022/datafile_corrected_v1.mat',
-          '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/02-27-2023/Expt1/datafile_corrected_v1.mat'};
+files = {'/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/9-9-2022/datafile_corrected_v4.mat',
+          '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/02-27-2023/Expt1/datafile_corrected_v4.mat'};
 
 statsmat = zeros(5,8);
-
+tmat = zeros(5,8);
+cmat = zeros(5,2,8);
+nmat = zeros(5,2,8);
 
 for i = 1:8
     switch i
@@ -36,7 +38,11 @@ for i = 1:8
             pows(5).value = zeros(size(pows(4).times));
         end
         sm = computeStats(pows,1);
-        statsmat(:,i) = sm;
+        statsmat(:,i) = sm.p;
+        tmat(:,i) = sm.tstat;
+        cmat(:,:,i) = sm.ci;
+        nmat(:,:,i) = sm.sampsz;
+
     
 end
 
@@ -44,7 +50,7 @@ end
 figure('Renderer', 'painters', 'Position', [10 10 2000 800],'Color','w');
 
 
-    heatmap({'9-9-22','9-19-22','10-04-22','11-15-22','Control 1','Control 2','Control 3','Control 4'},{'Left mOFC', 'Left lOFC','Right mOFC','Right lOFC','Speech'},1-statsmat); clim([0.95 1]);
+    heatmap({'9-9-22','9-19-22','10-04-22','11-15-22','Control 1','Control 2','Control 3','Control 4'},{'Left OFC', 'Left vlPFC','Right OFC','Right vlPFC','Speech'},1-statsmat); clim([0.95 1]);
     title(strcat('Version: ',string(i)));
 
 

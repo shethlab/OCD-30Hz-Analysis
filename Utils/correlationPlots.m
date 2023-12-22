@@ -1,7 +1,7 @@
 
 
-load('/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/9-9-2022/datafile_corrected_v3.mat')
-version = 3;
+load('/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/9-9-2022/datafile_corrected_v4.mat')
+version = 1;
 
 %% correlation plot
     figure('Renderer', 'painters', 'Position', [10 10 2000 800],'Color','w');

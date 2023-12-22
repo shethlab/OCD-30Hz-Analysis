@@ -1,15 +1,15 @@
 close all;
 clear all;
 %% Load Files
-load_dir = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/9-9-2022/';
-amp_analysis_file = [load_dir,'/aDBS012_2022-09-09_amplitude-analysis_v2.mat'];
-textgrid = [load_dir,'aDBS012_2022-09-09_audio_amplitude.TextGrid'];
-psdfile = [load_dir,'aDBS012_2022-09-09_PSD-data_Left_v2.mat'];
+load_dir = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/02-27-2023/Expt1/';
+amp_analysis_file = [load_dir,'aDBS012_2023-02-27_amplitude-analysis_v2.mat'];
+textgrid = [load_dir,'Experiment1.TextGrid'];
+psdfile = [load_dir,'aDBS012_2023-02-27_PSD-data_Left_v2.mat'];
 fig_num = 3;
 
 
 power_datafile = [load_dir,'datafile_corrected_v4.mat'];
-savedir = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/Figures/Figure 3/Version4/';
+savedir = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/Figures/Figure 3/Supplement/';
 if ~isdir(savedir)
     mkdir(savedir);
 end
@@ -153,11 +153,11 @@ h(3) = subplot(10,1,[6 7 8 9]);
 yyaxis left
 bar(pows(5).times,pows(5).value,'FaceColor',[0.8 0.8 0.9]);
 q = gca;
-q.XAxis.Visible = 'off';
+%q.XAxis.Visible = 'off';
 hold on;
 plot(pows(5).times,movavg(pows(5).value',"exponential",5),'LineStyle','-','Color','b','LineWidth',1.5);
 q = gca;
-q.XAxis.Visible = 'off';
+%q.XAxis.Visible = 'off';
 ylim([0,10])
 ylabel('Words/s (Hz)')
 box off
@@ -174,7 +174,7 @@ ylabel({'30 Hz Power', '(dB, 1/f Corrected)'})
 ylim([0 15])
 yticks([0,5,10,15]);
 q = gca;
-q.XAxis.Visible = 'off';
+%q.XAxis.Visible = 'off';
 %h(4).FontSize = 14;
 h(3).YAxis(1).Color = 'b';
 h(3).YAxis(2).Color = 'r';

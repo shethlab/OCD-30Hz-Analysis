@@ -1,9 +1,9 @@
-fig4 = figure('Renderer', 'painters', 'Position', [10 10 2000 1200],'Color','w');
-
-t = tiledlayout(4,4);
+fig4psd = figure('Renderer', 'painters', 'Position', [10 10 1200 800],'Color','w');
+fig4violins = figure('Renderer', 'painters', 'Position', [10 10 2000 1200],'Color','w');
+%t = tiledlayout(4,4);
 
 %% 11/15 Data
-datafile = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/11-15-2022/datafile_corrected_v1.mat';
+datafile = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/11-15-2022/datafile_corrected_v4.mat';
 psdfileleft = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/11-15-2022/aDBS012_2022-11-15_PSD-data_Left_v2.mat';
 psdfileright = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/11-15-2022/aDBS012_2022-11-15_PSD-data_Right_v2.mat';
 
@@ -20,7 +20,8 @@ c = [31 195 255;...
     %0 38 255;...
     57 181 74]/255;
 upper_freq_lim = 55;
-ax(1) = nexttile;
+figure(fig4psd);
+ax(1) = subplot(3,3,1);
 hold on
 axis square
 box off
@@ -64,12 +65,13 @@ time2 = stimdata.lowTimes(2,2);
 inds = find((cat == 0 | cat == 1) & (pows(2).times<=time1 | pows(2).times>=time2));
 data = data(inds);
 cat = cat(inds);
-nexttile;
+figure(fig4violins);
+subplot(2,6,1);
 violins1 = violinplot(data,cat,'ShowMean',true);
 q(1) = gca;
 q(1).FontSize = 14;
 q(1).XAxis.Visible = 'off';
-clearvars -except pows fig4 t ax q psdfileright stimdata
+clearvars -except pows fig4psd fig4violins ax q psdfileright stimdata
 
 
 % right
@@ -82,7 +84,8 @@ c = [31 195 255;...
     %0 38 255;...
     57 181 74]/255;
 upper_freq_lim = 55;
-ax(2) = nexttile;
+figure(fig4psd);
+ax(2) = subplot(3,3,2);
 hold on
 axis square
 box off
@@ -125,15 +128,16 @@ cat = pows(4).high_amp;
 inds = find((cat == 0 | cat == 1));
 data = data(inds);
 cat = cat(inds);
-nexttile;
+figure(fig4violins);
+subplot(2,6,2);
 violins1 = violinplot(data,cat,'ShowMean',true);
 q(2) = gca;
 q(2).FontSize = 14;
 q(2).XAxis.Visible = 'off';
-clearvars -except fig4 t ax q
+clearvars -except fig4psd fig4violins ax q
 %%
 %% 02/27 Data
-datafile = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/02-27-2023/Expt1/datafile_corrected_v1.mat';
+datafile = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/02-27-2023/Expt1/datafile_corrected_v4.mat';
 psdfileleft = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/02-27-2023/Expt1/aDBS012_2023-02-27_PSD-data_Left_v2.mat';
 psdfileright = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/02-27-2023/Expt1/aDBS012_2023-02-27_PSD-data_Right_v2.mat';
 load(datafile);
@@ -148,7 +152,8 @@ c = [31 195 255;...
     %0 38 255;...
     57 181 74]/255;
 upper_freq_lim = 55;
-ax(3) = nexttile;
+figure(fig4psd);
+ax(3) = subplot(3,3,3);
 hold on
 axis square
 box off
@@ -188,13 +193,14 @@ cat(cat==3)=0;
 inds = find(cat == 0 | cat == 1);
 data = data(inds);
 cat = cat(inds);
-nexttile;
+figure(fig4violins);
+subplot(2,6,3);
 violins1 = violinplot(data,cat,'ShowMean',true);
 q(3) = gca;
 q(3).FontSize = 14;
 q(3).XAxis.Visible = 'off';
 
-clearvars -except fig4 t ax q pows psdfileright
+clearvars -except fig4psd fig4violins ax q pows psdfileright
 
 %Right
 load(psdfileright);
@@ -206,7 +212,8 @@ c = [31 195 255;...
     %0 38 255;...
     57 181 74]/255;
 upper_freq_lim = 55;
-ax(4) = nexttile;
+figure(fig4psd);
+ax(4) = subplot(3,3,4);
 hold on
 axis square
 box off
@@ -246,14 +253,16 @@ cat(cat==3)=0;
 inds = find(cat == 0 | cat == 1);
 data = data(inds);
 cat = cat(inds);
-nexttile;
+figure(fig4violins);
+subplot(2,6,4);
 violins1 = violinplot(data,cat,'ShowMean',true);
 q(4) = gca;
 q(4).FontSize = 14;
 q(4).XAxis.Visible = 'off';
 
-ylim(q,[-8,12])
+ylim(q,[0,20])
 linkaxes(ax,'y');
 linkaxes(q,'y');
 
-saveas(gcf,'/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/Figures/Figure 4/PanelA.svg')
+saveas(fig4psd,'/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/Figures/Figure 4/PanelA.svg')
+saveas(fig4violins,'/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/Figures/Figure 4/PanelB.svg')

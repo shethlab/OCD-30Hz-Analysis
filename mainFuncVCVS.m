@@ -3,11 +3,14 @@
 % organization) and include analysis_v2 file and TextGrid in the folder.
 directory = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/';
 correct = 1; %correct 30Hz Powers (toggle to 0 for raw power)
-
+version = 1;%usemaxs
 % Box Plot Figure Init.
 figure('units','normalized','outerposition',[0 0 1 1]);
 tiledlayout(5,4);
 stats_mat = zeros(5,4); % Init Stats Matrix for heatmap
+centerf = 31;
+window = 3;
+frange = centerf+[-window/2,window/2];
 %% Rotate Through Dates
 i = 1;
             fn = strcat(directory,'9-9-2022/aDBS012_2022-09-09_amplitude-analysis_v2.mat');
@@ -47,7 +50,7 @@ i = 1;
             tmin = 0;
             %tmax = amp_data.DBS_high_times(2,2);
             tdsig = tdsig(tstamps>=tmin); % Chop pre-0 signal
-            [pwrs,times,tf,s_data] = correctedPowers(tdsig,tmin,[28 32],correct);
+            [pwrs,times,tf,s_data] = correctedPowers(tdsig,tmin,frange,correct,version);
 
             save(svnspr,'s_data');
             %% Power Epoching
