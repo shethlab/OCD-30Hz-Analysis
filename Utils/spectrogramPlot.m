@@ -13,7 +13,7 @@ end
 ax1 = subplot(10,1,[4 5 6]);
 [~,f,t,tf]=spectrogram(ch_1,250,125,250,500);
 scaling = [-27,-8];
-imagesc('XData',t,'YData',f,'CData',cnelab_TF_Smooth(log(abs(tf)),'gaussian',[1,10]),scaling);
+imagesc('XData',t,'YData',f,'CData',cnelab_TF_Smooth(10*log10(abs(tf)),'gaussian',[1,10]),scaling);
 colormap(jet);
 title([hem,channels{ch_input1}])
 ylabel('Frequency (Hz)')

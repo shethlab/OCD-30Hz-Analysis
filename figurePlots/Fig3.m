@@ -180,7 +180,7 @@ h(3).YAxis(1).Color = 'b';
 h(3).YAxis(2).Color = 'r';
 
 %% Panel B
-specaxes = spectrogramPlot(amp_data.lfp(1).combinedDataTable(:,6),1,start_ind1,end_ind1,0,'Left ',{'Lateral OFC'},50);
+specaxes = spectrogramPlot(amp_data.lfp(1).combinedDataTable(:,6),1,start_ind1,end_ind1,0,'Left ',{'vlPFC'},50);
 xlimits = [cell2mat(xlim(h)); xlim(specaxes)];
 xupperlim = min(xlimits(:,2));
 linkaxes([specaxes,h],'x');
