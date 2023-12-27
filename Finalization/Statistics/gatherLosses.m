@@ -1,21 +1,21 @@
 allLosses = {};
 allTimes = {};
-directory = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/';
+directory = '/Users/sameerrajesh/Desktop/30Hz Project Data/';
 
 for i = 1:6
     switch i
         case 1
-            fn = strcat(directory,'9-9-2022/aDBS012_2022-09-09_amplitude-analysis_v2.mat');
+            fn = strcat(directory,'2022-09-09/AnalysisFiles/amplitude/2022-09-09_amplitude-analysis.mat');
         case 2
-            fn = strcat(directory,'9-19-2022/aDBS012_2022-09-19_amplitude-analysis_v2.mat');
+            fn = strcat(directory,'2022-09-19/AnalysisFiles/amplitude/2022-09-19_amplitude-analysis.mat');
         case 3
-            fn = strcat(directory,'10-04-2022/aDBS012_2022-10-04_amplitude-analysis_v2.mat');
+            fn = strcat(directory,'2022-10-04/AnalysisFiles/amplitude/2022-10-04_amplitude-analysis.mat');
         case 4
-            fn = strcat(directory,'11-15-2022/aDBS012_2022-11-15_amplitude-analysis_v2.mat');
+            fn = strcat(directory,'2022-11-15/AnalysisFiles/amplitude/2022-11-15_amplitude-analysis.mat');
         case 5
-            fn = strcat(directory,'02-27-2023/Expt1/aDBS012_2023-02-27_amplitude-analysis_v2.mat');
+            fn = strcat(directory,'2023-02-27/AnalysisFiles/amplitude/Experiment_1/2023-02-27_amplitude-analysis.mat');
         case 6
-            fn = strcat(directory,'02-27-2023/Expt5/aDBS012_2023-02-27_amplitude-analysis_v2.mat');
+            fn = strcat(directory,'2023-02-27/AnalysisFiles/amplitude/Experiment_2/2023-02-27_amplitude-analysis.mat');
     end
     load(fn);
     s = findLosses(amp_data.lfp,amp_data.ts1,amp_data.ts2,amp_data.DBS_low_times(1,1),amp_data.DBS_clin_times(end,end),500);

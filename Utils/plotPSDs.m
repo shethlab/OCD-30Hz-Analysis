@@ -26,9 +26,9 @@ axis square
 
 box off
 
-if fig_num ==4
+if fig_num ==3
     ii = 5;
-elseif fig_num ==3
+elseif fig_num ==2
     ii = 2;
     low = (low1+low2+clin1)/3;
     high = (high1+high2)/2;
@@ -37,13 +37,13 @@ end
 for i = 1:ii
     switch i 
         case 1
-            if fig_num ==3
+            if fig_num ==2
                 dat = low;
             else
                 dat = low1;
             end
         case 2
-            if fig_num ==3
+            if fig_num ==2
                 dat = high;
             else
                 dat = high1;

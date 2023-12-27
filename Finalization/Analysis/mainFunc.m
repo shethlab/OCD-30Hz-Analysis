@@ -2,7 +2,7 @@
 % Load Directory: include 4 folders labeled by date (see below file
 % organization) and include analysis_v2 file and TextGrid in the folder.
 close all
-directory = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/';
+directory = '/Users/sameerrajesh/Desktop/30Hz Project Data/';
 
 %% User Inputs
 correct = 1; %correct 30Hz Powers (toggle to 0 for raw power)
@@ -15,29 +15,29 @@ frange = centerf+[-window/2,window/2];
 for i = 1:6
     switch i
         case 1
-            fn = strcat(directory,'9-9-2022/aDBS012_2022-09-09_amplitude-analysis_v2.mat');
-            tg = strcat(directory,'9-9-2022/aDBS012_2022-09-09_audio_amplitude.TextGrid');
-            svn = strcat(directory,'9-9-2022/datafile.mat');
+            fn = strcat(directory,'2022-09-09/AnalysisFiles/amplitude/2022-09-09_amplitude-analysis.mat');
+            tg = strcat(directory,'2022-09-09/AudioData/2022-09-09_audio_amplitude.TextGrid');
+            svn = strcat(directory,'2022-09-09/AnalysisFiles/amplitude/datafile.mat');
         case 2
-            fn = strcat(directory,'9-19-2022/aDBS012_2022-09-19_amplitude-analysis_v2.mat');
-            tg = strcat(directory,'9-19-2022/aDBS012_2022-09-19_audio_amplitude.TextGrid');
-            svn = strcat(directory,'9-19-2022/datafile.mat');
+            fn = strcat(directory,'2022-09-19/AnalysisFiles/amplitude/2022-09-19_amplitude-analysis.mat');
+            tg = strcat(directory,'2022-09-19/AudioData/2022-09-19_audio_amplitude.TextGrid');
+            svn = strcat(directory,'2022-09-19/AnalysisFiles/amplitude/datafile.mat');
         case 3
-            fn = strcat(directory,'10-04-2022/aDBS012_2022-10-04_amplitude-analysis_v2.mat');
-            tg = strcat(directory,'10-04-2022/aDBS012_2022_10_04_audio_amplitude.TextGrid');
-            svn = strcat(directory,'10-04-2022/datafile.mat');
+            fn = strcat(directory,'2022-10-04/AnalysisFiles/amplitude/2022-10-04_amplitude-analysis.mat');
+            tg = strcat(directory,'2022-10-04/AudioData/2022-10-04_audio_amplitude.TextGrid');
+            svn = strcat(directory,'2022-10-04/AnalysisFiles/amplitude/datafile.mat');
         case 4
-            fn = strcat(directory,'11-15-2022/aDBS012_2022-11-15_amplitude-analysis_v2.mat');
-            tg = strcat(directory,'11-15-2022/aDBS012_2022-11-15_audio_amplitude.TextGrid');
-            svn = strcat(directory,'11-15-2022/datafile.mat');
+            fn = strcat(directory,'2022-11-15/AnalysisFiles/amplitude/2022-11-15_amplitude-analysis.mat');
+            tg = strcat(directory,'2022-11-15/AudioData/2022-11-15_audio_amplitude.TextGrid');
+            svn = strcat(directory,'2022-11-15/AnalysisFiles/amplitude/datafile.mat');
         case 5
-            fn = strcat(directory,'02-27-2023/Expt1/aDBS012_2023-02-27_amplitude-analysis_v2.mat');
-            tg = strcat(directory,'02-27-2023/Expt1/Experiment1.TextGrid');
-            svn = strcat(directory,'02-27-2023/Expt1/datafile.mat');
+            fn = strcat(directory,'2023-02-27/AnalysisFiles/amplitude/Experiment_1/2023-02-27_amplitude-analysis.mat');
+            tg = strcat(directory,'2023-02-27/AudioData/2023-02-27_audio_amplitude_Experiment1.TextGrid');
+            svn = strcat(directory,'2023-02-27/AnalysisFiles/amplitude/Experiment_1/datafile.mat');
         case 6
-            fn = strcat(directory,'02-27-2023/Expt5/aDBS012_2023-02-27_amplitude-analysis_v2.mat');
-            tg = strcat(directory,'02-27-2023/Expt5/Experiment5.TextGrid');
-            svn = strcat(directory,'02-27-2023/Expt5/datafile.mat');
+            fn = strcat(directory,'2023-02-27/AnalysisFiles/amplitude/Experiment_2/2023-02-27_amplitude-analysis.mat');
+            tg = strcat(directory,'2023-02-27/AudioData/2023-02-27_audio_amplitude_Experiment2.TextGrid');
+            svn = strcat(directory,'2023-02-27/AnalysisFiles/amplitude/Experiment_2/datafile.mat');
     end
     load(fn);
     pows = {};
@@ -45,7 +45,7 @@ for i = 1:6
     %% Rotate Through Contacts
     for j = 1:4
         figpos = 4*(j-1)+i;
-        datelabel = extractBetween(fn,'aDBS012_','_amplitude');
+        datelabel = extractBetween(fn,'amplitude/','_amplitude');
         switch j
             case 1
                 tlabel = strcat(datelabel,' ; Contact Left mOFC');
@@ -98,7 +98,7 @@ for i = 1:6
             hiinds = find((times>=amp_data.DBS_high_times(1,1) & times<=amp_data.DBS_high_times(1,2)) | (times>=amp_data.DBS_high_times(2,1) & times<=amp_data.DBS_high_times(2,2)));
             loinds = find((times>=amp_data.DBS_low_times(1,1) & times<=amp_data.DBS_low_times(1,2)) | (times>=amp_data.DBS_low_times(2,1) & times<=amp_data.DBS_low_times(2,2)));
             clininds = find((times>=amp_data.DBS_clin_times(1,1) & times<=amp_data.DBS_clin_times(1,2)) );
-            if (amp_data.clin_amp_left == 0 && amp_data.clin_amp_right == 0) | i == 5
+            if (amp_data.clin_amp_left == 0 && amp_data.clin_amp_right == 0) || i == 5
                 amps(clininds) = 0;
             else
                 amps(clininds) = 3;
@@ -126,7 +126,7 @@ for i = 1:6
         hiinds = find((tms>=amp_data.DBS_high_times(1,1) & tms<=amp_data.DBS_high_times(1,2)) | (tms>=amp_data.DBS_high_times(2,1) & tms<=amp_data.DBS_high_times(2,2)));
         loinds = find((tms>=amp_data.DBS_low_times(1,1) & tms<=amp_data.DBS_low_times(1,2)) | (tms>=amp_data.DBS_low_times(2,1) & tms<=amp_data.DBS_low_times(2,2)));
         clininds = find((tms>=amp_data.DBS_clin_times(end,1) & tms<=amp_data.DBS_clin_times(end,2)) );
-        if (amp_data.clin_amp_left == 0 && amp_data.clin_amp_right == 0) | i == 5
+        if (amp_data.clin_amp_left == 0 && amp_data.clin_amp_right == 0) || i == 5
             amps(clininds) = 0;
         else
             amps(clininds) = 3;

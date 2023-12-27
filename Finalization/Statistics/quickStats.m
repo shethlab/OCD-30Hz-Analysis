@@ -1,8 +1,8 @@
 %% Compute Statistics for High vs Low Amplitude
 
 %% Initialize matrices/data structures and file searching
-files = {'/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/9-9-2022/datafile_corrected_v4.mat',
-    '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/02-27-2023/Expt1/datafile_corrected_v4.mat'};
+files = {'/Users/sameerrajesh/Desktop/30Hz Project Data/2022-09-09/AnalysisFiles/amplitude/datafile_corrected_v4.mat',
+    '/Users/sameerrajesh/Desktop/30Hz Project Data/2023-02-27/AnalysisFiles/amplitude/Experiment_1/datafile_corrected_v4.mat'};
 
 statsmat = zeros(5,6);
 tmat = zeros(5,6);
@@ -12,23 +12,23 @@ nmat = zeros(5,2,6);
 for i = 1:6
     switch i
         case 1
-            rep = '9-9-2022';
+            rep = '2022-09-09';
         case 2
-            rep = '9-19-2022';
+            rep = '2022-09-19';
         case 3
-            rep = '10-04-2022';
+            rep = '2022-10-04';
         case 4
-            rep = '11-15-2022';
+            rep = '2022-11-15';
         case 5
-            rep = 'Expt1';
+            rep = 'Experiment_1';
         case 6
-            rep = 'Expt5';
+            rep = 'Experiment_2';
 
     end
     if i<5
-        fn = strrep(files{1},'9-9-2022',rep);
+        fn = strrep(files{1},'2022-09-09',rep);
     else
-        fn = strrep(files{2},'Expt1',rep);
+        fn = strrep(files{2},'Experiment_1',rep);
     end
     %% Load file
     load(fn);

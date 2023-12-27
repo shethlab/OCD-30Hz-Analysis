@@ -1,17 +1,18 @@
 %% Main Analysis Function
 % Load Directory: include 4 folders labeled by date (see below file
 % organization) and include analysis_v2 file and TextGrid in the folder.
-directory = '/Users/sameerrajesh/Desktop/aDBS012 AMP PSD/';
+directory = '/Users/sameerrajesh/Desktop/30Hz Project Data/';
 correct = 1; %correct 30Hz Powers (toggle to 0 for raw power)
-version = 1;%usemaxs
+version = '_v4';
+vers = 1;
 centerf = 31;
 window = 3;
 frange = centerf+[-window/2,window/2];
 %% Only Made VCVS Info for First Experiment
 i = 1;
-fn = strcat(directory,'9-9-2022/aDBS012_2022-09-09_amplitude-analysis_v2.mat');
-tg = strcat(directory,'9-9-2022/aDBS012_2022-09-09_audio_amplitude.TextGrid');
-svn = strcat(directory,'9-9-2022/vcvsdatafile.mat');
+fn = strcat(directory,'2022-09-09/AnalysisFiles/amplitude/2022-09-09_amplitude-analysis.mat');
+tg = strcat(directory,'2022-09-09/AudioData/2022-09-09_audio_amplitude.TextGrid');
+svn = strcat(directory,'2022-09-09/AnalysisFiles/amplitude/vcvsdatafile.mat');
 
 load(fn);
 pows = {};
@@ -19,7 +20,7 @@ pows = {};
 %% Rotate Through Contacts
 for j = 1:2
     figpos = 2*(j-1)+i;
-    datelabel = extractBetween(fn,'aDBS012_','_amplitude');
+    datelabel = extractBetween(fn,'amplitude/','_amplitude');
     switch j
         case 1
             tlabel = strcat(datelabel,' ; Contact Left VC/VS');
@@ -40,7 +41,7 @@ for j = 1:2
         tdsig = nan_demean(tdsig); %Demean signal
         tmin = 0;
         tdsig = tdsig(tstamps>=tmin); % Chop pre-0 signal
-        [pwrs,times,tf,s_data] = correctedPowers(tdsig,tmin,frange,correct,version);
+        [pwrs,times,tf,s_data] = correctedPowers(tdsig,tmin,frange,correct,vers);
         save(svnspr,'s_data');
         %% Include low/high amp binary
         amps = NaN(1,length(times));
@@ -54,7 +55,7 @@ for j = 1:2
         end
         amps(hiinds) = 1;
         amps(loinds) = 0; % times with amp = -1 should be excluded from analysis
-        
+
     catch
         error; % Throw Error For Now
     end
@@ -84,7 +85,7 @@ try
     amps(hiinds) = 1;
     amps(loinds) = 0; % times with amp = -1 should be excluded from analysis
     pows(5).high_amp = amps;
-    
+
 
 catch
     error; %Throw Error For Now;
@@ -100,7 +101,8 @@ stim_data.clinRight = amp_data.clin_amp_right;
 if correct
     svn = strrep(svn,'datafile','datafile_corrected');
 end
-save(svn,'pows','stimdata');
+svnfin = strrep(svn,'.mat',strcat(version,'.mat'));
+save(svnfin,'pows','stimdata');
 close all
 
 
