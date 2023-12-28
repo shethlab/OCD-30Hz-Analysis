@@ -117,9 +117,7 @@ for i = 1:6
         if isempty(wps)
             wps;
         end
-        spHigh = [gatherInEpoch(wps,tms,amp_data.DBS_high_times(1,:)) gatherInEpoch(wps,tms,amp_data.DBS_high_times(2,:))];
-        spLow = [gatherInEpoch(wps,tms,amp_data.DBS_low_times(1,:)) gatherInEpoch(wps,tms,amp_data.DBS_low_times(2,:))];
-        
+
         pows(5).value = wps;
         pows(5).times = tms;
         amps = NaN(1,length(tms));
@@ -134,8 +132,6 @@ for i = 1:6
         amps(hiinds) = 1;
         amps(loinds) = 0; % times with amp = nan should be excluded from analysis
         pows(5).high_amp = amps;
-       
-
     catch
         error; % Throw Error For Now
     end

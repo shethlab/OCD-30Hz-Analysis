@@ -68,8 +68,7 @@ try
     if isempty(wps)
         wps;
     end
-    spHigh = [gatherInEpoch(wps,tms,amp_data.DBS_high_times(1,:)) gatherInEpoch(wps,tms,amp_data.DBS_high_times(2,:))];
-    spLow = [gatherInEpoch(wps,tms,amp_data.DBS_low_times(1,:)) gatherInEpoch(wps,tms,amp_data.DBS_low_times(2,:))];
+
 
     pows(5).value = wps;
     pows(5).times = tms;

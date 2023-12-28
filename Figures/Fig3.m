@@ -5,7 +5,7 @@ fig3violins = figure('Renderer', 'painters', 'Position', [10 10 2000 1200],'Colo
 
 datafile = '/Users/sameerrajesh/Desktop/30Hz Project Data/2022-11-15/AnalysisFiles/amplitude/datafile_corrected_v4.mat';
 psdfileleft = '/Users/sameerrajesh/Desktop/30Hz Project Data/2022-11-15/AnalysisFiles/amplitude/2022-11-15_PSD-data_Left.mat';
-psdfileright = '/Users/sameerrajesh/Desktop/30Hz Project Data/2022-11-15/AnalysisFiles/amplitude/2022-11-15_PSD-data_Left.mat';
+psdfileright = '/Users/sameerrajesh/Desktop/30Hz Project Data/2022-11-15/AnalysisFiles/amplitude/2022-11-15_PSD-data_Right.mat';
 
 load(datafile);
 
@@ -36,7 +36,7 @@ for i = 1:3
             i = 5;
     end
     hold on;
-    plot(ax(1),f1,dat(:,3),'Color',c(i,:),'LineWidth',1)
+    plot(ax(1),f1,dat(:,4),'Color',c(i,:),'LineWidth',1)
     hold on;
     if i == 5
 
@@ -100,7 +100,7 @@ for i = 1:3
             i = 5;
     end
     hold on;
-    plot(ax(2),f1,dat(:,3),'Color',c(i,:),'LineWidth',1)
+    plot(ax(2),f1,dat(:,4),'Color',c(i,:),'LineWidth',1)
     hold on;
     if i == 5
 
@@ -139,7 +139,7 @@ clearvars -except fig3psd fig3violins ax q
 %% 02/27 Data
 datafile = '/Users/sameerrajesh/Desktop/30Hz Project Data/2023-02-27/AnalysisFiles/amplitude/Experiment_1/datafile_corrected_v4.mat';
 psdfileleft = '/Users/sameerrajesh/Desktop/30Hz Project Data/2023-02-27/AnalysisFiles/amplitude/Experiment_1/2023-02-27_PSD-data_Left.mat';
-psdfileright = '/Users/sameerrajesh/Desktop/30Hz Project Data/2023-02-27/AnalysisFiles/amplitude/Experiment_1/2023-02-27_PSD-data_Left.mat';
+psdfileright = '/Users/sameerrajesh/Desktop/30Hz Project Data/2023-02-27/AnalysisFiles/amplitude/Experiment_1/2023-02-27_PSD-data_Right.mat';
 load(datafile);
 
 %left
@@ -165,7 +165,7 @@ for i = 1:2
             dat = (high1+high2)/2;
     end
     hold on;
-    plot(ax(3),f1,dat(:,3),'Color',c(i,:),'LineWidth',1)
+    plot(ax(3),f1,dat(:,4),'Color',c(i,:),'LineWidth',1)
     hold on;
     if i == 2
 
@@ -225,7 +225,7 @@ for i = 1:2
             dat = (high1+high2)/2;
     end
     hold on;
-    plot(ax(4),f1,dat(:,3),'Color',c(i,:),'LineWidth',1)
+    plot(ax(4),f1,dat(:,4),'Color',c(i,:),'LineWidth',1)
     hold on;
     if i == 2
 

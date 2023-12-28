@@ -74,6 +74,9 @@ for i = 1: height(stable_periods)
     stim_params_right = [stim_params_right; ampc2(rinds,:)];
 end
 
+stim_params_left(isnan(stim_params_left(:,1))) = 0;
+stim_params_right(isnan(stim_params_right(:,1))) = 0;
+
 left_high = max(stim_params_left(:,1));
 left_low = min(stim_params_left(:,1));
 

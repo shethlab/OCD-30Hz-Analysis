@@ -7,7 +7,7 @@ tg = strcat(load_dir,'AudioData/2022-09-09_audio_amplitude.TextGrid');
 psdfile = [load_dir,'AnalysisFiles/amplitude/2022-09-09_PSD-data_Left.mat'];
 power_datafile = [load_dir,'AnalysisFiles/amplitude/datafile_corrected_v4.mat'];
 vcvs_datafile = [load_dir,'AnalysisFiles/amplitude/vcvsdatafile_corrected_v4.mat'];
-fig_num = 3;
+fig_num = 2;
 savedir = '/Users/sameerrajesh/Desktop/30Hz Project Data/Figures/Figure 2/';
 if ~isdir(savedir)
     mkdir(savedir);
@@ -16,7 +16,7 @@ end
 %% Load
 load(amp_analysis_file);
 load(power_datafile);
-a=tgRead(textgrid);
+a=tgRead(tg);
 % Audio Info
 wav = amp_data.audio;
 Fs = amp_data.fs_audio;
@@ -52,13 +52,10 @@ end
 %% Stim Info
 
 tStim=amp_data.stim_times1;
-if exp ~=6
+
     stimValLeft=amp_data.stim_changes1(:,1);
     stimValRight=amp_data.stim_changes2(:,1);
-else
-    stimValLeft=amp_data.stim_changes1(:,3);
-    stimValRight=amp_data.stim_changes2(:,3);
-end
+
 if length(tStim) >2
 stimOn=tStim(stimValLeft>0);
 stimOn=reshape(stimOn,[2,length(stimOn)/2]);
@@ -73,22 +70,22 @@ end
 
 %% chop time domain data to experiment time 
 
-start_ind1 = find(round(amp_data.ts1,3) == round(amp_data.DBS_high_times(1,1),2));
-if isempty(start_ind1)
-    start_ind1 = find(round(amp_data.ts1-0.001,3) == round(amp_data.DBS_high_times(1,1),2));
-end
-end_ind1 = find(round(amp_data.ts1,3) == round(amp_data.DBS_clin_times(1,2),2));
-if isempty(end_ind1)
-    end_ind1 = find(round(amp_data.ts1-0.001,3) == round(amp_data.DBS_clin_times(1,2),2));
-end
-start_ind2 = find(round(amp_data.ts2,3) == round(amp_data.DBS_high_times(1,1),2));
-if isempty(start_ind2)
-    start_ind2 = find(round(amp_data.ts2-0.001,3) == round(amp_data.DBS_high_times(1,1),2));
-end
-end_ind2 = find(round(amp_data.ts2,3) == round(amp_data.DBS_clin_times(1,2),2));
-if isempty(end_ind2)
-    end_ind2 = find(round(amp_data.ts2-0.001,3) == round(amp_data.DBS_clin_times(1,2),2));
-end
+    start_ind1 = find(round(amp_data.ts1,3) == round(amp_data.DBS_low_times(1,1),2));
+    if isempty(start_ind1)
+        start_ind1 = find(round(amp_data.ts1-0.001,3) == round(amp_data.DBS_low_times(1,1),2));
+    end
+    end_ind1 = find(round(amp_data.ts1,3) == round(amp_data.DBS_clin_times(1,2),2));
+    if isempty(end_ind1)
+        end_ind1 = find(round(amp_data.ts1-0.001,3) == round(amp_data.DBS_clin_times(1,2),2));
+    end
+    start_ind2 = find(round(amp_data.ts2,3) == round(amp_data.DBS_low_times(1,1),2));
+    if isempty(start_ind2)
+        start_ind2 = find(round(amp_data.ts2-0.001,3) == round(amp_data.DBS_low_times(1,1),2));
+    end
+    end_ind2 = find(round(amp_data.ts2,3) == round(amp_data.DBS_clin_times(1,2),2));
+    if isempty(end_ind2)
+        end_ind2 = find(round(amp_data.ts2-0.001,3) == round(amp_data.DBS_clin_times(1,2),2));
+    end
 
 
 %% Figure 2
@@ -112,11 +109,8 @@ plot(tStim+offset,stimValLeft,'Color',"#7E2F8E",'LineWidth',2);
 hold on;
 plot(tStim+offset,stimValRight,'Color',"#77AC30",'LineWidth',2);
 legend({'Left','Right'})
-if exp ~=6
     ylabel('DBS Amp. (mA)')
-else
-    ylabel('DBS Freq. (Hz)')
-end
+
 box off
 set(gca,'TickLength',[0.005, 0.01])
 q = gca;

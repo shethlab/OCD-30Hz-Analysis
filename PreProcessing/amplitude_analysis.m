@@ -12,7 +12,7 @@ exp = input(prompt);
 if exp==0
     exp_str = '';
 else
-    exp_str = ['Experiment_',num2str(exp),'\'];
+    exp_str = ['Experiment_',num2str(exp),'/'];
 end
 
 task = 'amplitude';
@@ -21,7 +21,7 @@ loaddir = ['/Users/sameerrajesh/Desktop/30Hz Project Data/',date,'/PreProcessedD
 
 %% find EEG file to load
 all_files = dir(loaddir);
-all_files(1:2) = [];
+all_files(startsWith({all_files.name},'.')) = [];
 for i = 1:length(all_files)
     file_name = all_files(i).name;
     if contains(file_name,'synced_ephys_behav_v3')
@@ -56,11 +56,32 @@ try load([loaddir,all_files(file_LFP).name])
 catch
     AV = [];
 end
+
+
+
+%% find toggle file to load
+for i = 1:length(all_files)
+    file_name = all_files(i).name;
+    if contains(file_name,'toggle')
+        file_toggle = i;
+    end
+end
+try 
+    toggle = load([loaddir,all_files(file_toggle).name]);
+    lfpData = toggle.lfpData;
+catch
+    toggle = [];
+end
 dat1 = lfpData(1).combinedDataTable;
 dat2 = lfpData(2).combinedDataTable;
-
 %% plot time domain
-task_start =  data.behavior.behav_start_timestamp_unix;
+try
+    timetable = toggle.toggle_sync.UDT_harmonized_events;
+    startev = find(cellfun(@(x)strcmp(x,'S  1'),[timetable.Event]));
+    task_start =  timetable{startev,2};
+catch
+    task_start =  data.behavior.behav_start_timestamp_unix;
+end
 task_end =  data.behavior.behav_end_timestamp_unix;
 ts1 = (dat1.DerivedTime - task_start)/1000;
 ts2 = (dat2.DerivedTime - task_start)/1000;
@@ -80,6 +101,8 @@ ampc2(ind_toggle2,:) = [];
 datc1(ind_toggle1) = [];
 datc2(ind_toggle2) = [];
 
+ampc1(isnan(ampc1(:,1))) = 0;
+ampc2(isnan(ampc2(:,1))) = 0;
 
 %% Verification of sensing setup
 behav_start = (data.behavior.behav_start_timestamp_unix-dat1.DerivedTime(1))/1000;
@@ -259,7 +282,7 @@ expt_end_time = DBS_clin_times(end,2);
 if exp>0
     expt_start_time_estimate = expt_end_time - 60*6;
 else
-    expt_start_time_estimate = expt_end_time - 60*18;
+    expt_start_time_estimate = 0; %Start the first experiment at time 0 (legacy preprocessing)
 end
 
 i = 1;
@@ -305,6 +328,10 @@ end
 i = 1;
 while i<= height(DBS_clin_times)
     if DBS_clin_times(i,2)<expt_start_time_estimate
+        DBS_clin_times(i,:) =[];
+        continue
+    end
+    if DBS_clin_times(i,2)<DBS_low_times(1,1)
         DBS_clin_times(i,:) =[];
         continue
     end

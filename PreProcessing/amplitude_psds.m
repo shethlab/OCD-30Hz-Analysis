@@ -12,7 +12,7 @@ exp = input(prompt);
 if exp==0
     exp_str = '';
 else
-    exp_str = ['Experiment_',num2str(exp),'\'];
+    exp_str = ['Experiment_',num2str(exp)];
 end
 
 task = 'amplitude';
@@ -79,9 +79,10 @@ c = [31 195 255;...
     237 28 36;...
     %0 38 255;...
     57 181 74]/255;
+leg_position = [.5 .48 .05 .03];
 
 % In this code long segments of packetloss are not excluded as indicated in
-% paper. Exclusion occurs downstream and is hardcoded.
+% paper. Exclusion occurs downstream and is hardcoded into the fi.
 %% Left Hemisphere
 hold_on = 0;
 [ax1,f1,mean_psdMat1_low1,mean_psdMat2_low1,mean_psdMat3_low1,mean_psdMat4_low1] = plot_PSD_nans(dat1,'Left',trial_inds_low1{1},hold_on,amp_data.channels(:,1),psd_win_size,psd_overlap,upper_freq_lim,log_bool,c(1,:));
@@ -95,7 +96,6 @@ leg1 = legend({['A: ',num2str(low_amp1),' mA'];['B: ',num2str(high_amp1),' mA'];
 set(leg1,'Position',leg_position);
 temp= ax1(1).Title.String;
 ax1(1).Title.String = [temp,': ',stimc1,', ',pw1,', ',freq1];
-sgtitle([subject_id,': ',date],'FontSize',18);
 low1 = [mean_psdMat1_low1,mean_psdMat2_low1,mean_psdMat3_low1,mean_psdMat4_low1];
 low2 = [mean_psdMat1_low2,mean_psdMat2_low2,mean_psdMat3_low2,mean_psdMat4_low2];
 high1 = [mean_psdMat1_high1,mean_psdMat2_high1,mean_psdMat3_high1,mean_psdMat4_high1];
@@ -117,7 +117,6 @@ leg1 = legend({['A: ',num2str(low_amp2),' mA'];['B: ',num2str(high_amp2),' mA'];
 set(leg1,'Position',leg_position);
 temp= ax1(1).Title.String;
 ax1(1).Title.String = [temp,': ',stimc2,', ',pw2,', ',freq2];
-sgtitle([subject_id,': ',date],'FontSize',18);
 low1 = [mean_psdMat1_low1,mean_psdMat2_low1,mean_psdMat3_low1,mean_psdMat4_low1];
 low2 = [mean_psdMat1_low2,mean_psdMat2_low2,mean_psdMat3_low2,mean_psdMat4_low2];
 high1 = [mean_psdMat1_high1,mean_psdMat2_high1,mean_psdMat3_high1,mean_psdMat4_high1];
