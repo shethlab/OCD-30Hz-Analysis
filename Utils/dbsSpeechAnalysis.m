@@ -27,7 +27,7 @@ catch
     n = [];
     edges = [];
     wAmp =[];
-    tW=(1:length(wav))/Fs;
+    tW=(1:length(wav))/amp_data.fs_audio;
     w = [];
 end 
 %%
