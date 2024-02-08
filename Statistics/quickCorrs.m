@@ -95,5 +95,5 @@ for i = 1:4
         end
     end
 end
-
+save('/Users/sameerrajesh/Desktop/30Hz Project Data/Quantification/correlations.mat',"formt");
 
