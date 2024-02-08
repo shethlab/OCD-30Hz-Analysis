@@ -157,7 +157,7 @@ xlim([0,xupperlim]);
 
 saveas(fig3,strcat(savedir,'Supp1.svg'));
 
-
+saveas(fig1,strcat(savedir,'Supp1amplitude.svg'));
 
 
 

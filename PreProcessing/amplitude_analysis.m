@@ -66,9 +66,14 @@ for i = 1:length(all_files)
         file_toggle = i;
     end
 end
+
 try 
     toggle = load([loaddir,all_files(file_toggle).name]);
+    if ~strcmp(date,'2022-09-09') && ~strcmp(exp,2)
+    offsetRH = mean(toggle.lfpData(2).unifiedDerivedTimes-lfpData(2).unifiedDerivedTimes,'omitnan');
     lfpData = toggle.lfpData;
+    lfpData(2).full_stim_log.("Unified Derived Time") = lfpData(2).full_stim_log.("Unified Derived Time")+offsetRH;
+    end
 catch
     toggle = [];
 end
@@ -88,8 +93,8 @@ ts2 = (dat2.DerivedTime - task_start)/1000;
 
 %% Visualize Stimulation Parameters
 % get stim
-[datc1,ampc1] = plot_stim_settings(lfpData(1).stimLogSettings,lfpData(1).timeDomainSettings.samplingRate(1),dat1,task_start,task_end,lfpData(1).hemisphere);
-[datc2,ampc2] = plot_stim_settings(lfpData(2).stimLogSettings,lfpData(2).timeDomainSettings.samplingRate(1),dat2,task_start,task_end,lfpData(2).hemisphere);
+[datc1,ampc1] = plot_stim_settings(lfpData(1).full_stim_log,lfpData(1).timeDomainSettings.samplingRate(1),dat1,task_start,task_end,lfpData(1).hemisphere);
+[datc2,ampc2] = plot_stim_settings(lfpData(2).full_stim_log,lfpData(2).timeDomainSettings.samplingRate(1),dat2,task_start,task_end,lfpData(2).hemisphere);
 
 % delete toggles
 
