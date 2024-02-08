@@ -73,7 +73,7 @@ for i = 1:6
                 t0 = amp_data.ts2(1);
                 tstamps = amp_data.ts2;
                 svnspr = strrep(svn,'datafile',strcat('SPRiNT_RlOFC',version));
-                
+
         end
         %% Main Body
         try
@@ -86,7 +86,7 @@ for i = 1:6
             else
                 [pwrs,times,tf,s_data] = correctedPowers(tdsig,tmin,frange,correct,0);
             end
-            if i == 4 && j <3 
+            if i == 4 && j <3
                 inds = find(times<265 | times>571); %times for the packet loss, hard coded
                 times = times(inds);
                 pwrs = pwrs(inds);%Removed a Packet Loss Segment for 4th date left hem
@@ -104,7 +104,7 @@ for i = 1:6
                 amps(clininds) = 3;
             end
             amps(hiinds) = 1;
-            amps(loinds) = 0; % times with amp = nan should be excluded from analysis            
+            amps(loinds) = 0; % times with amp = nan should be excluded from analysis
         catch
             error; % Throw Error For Now
         end
