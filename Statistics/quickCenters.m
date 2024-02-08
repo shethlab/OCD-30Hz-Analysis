@@ -54,3 +54,4 @@ for i = 1:4
     end
 end
 
+save('/Users/sameerrajesh/Desktop/30Hz Project Data/Quantification/measuresOfCenter.mat',"formt");
