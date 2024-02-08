@@ -17,7 +17,7 @@ end
 left_intervals=[];
 for i = 1:height(left_removals)
     rem_time = left_removals(i);
-    rem_interval = [rem_time-3,rem_time+5];
+    rem_interval = [rem_time-5,rem_time+5];
     left_intervals(i,:) = rem_interval;
 end
 
