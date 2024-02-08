@@ -1,8 +1,8 @@
 %% Compute Statistics for High vs Low Amplitude
 
 %% Initialize matrices/data structures and file searching
-files = {'/Users/sameerrajesh/Desktop/30Hz Project Data/2022-09-09/AnalysisFiles/amplitude/datafile_corrected_v4.mat',
-    '/Users/sameerrajesh/Desktop/30Hz Project Data/2023-02-27/AnalysisFiles/amplitude/Experiment_1/datafile_corrected_v4.mat'};
+files = {'/Users/sameerrajesh/Desktop/30Hz Project Data/2022-09-09/AnalysisFiles/amplitude/vcvsdatafile_corrected_v4.mat',
+    '/Users/sameerrajesh/Desktop/30Hz Project Data/2023-02-27/AnalysisFiles/amplitude/Experiment_1/vcvsdatafile_corrected_v4.mat'};
 
 statsmat = zeros(5,6);
 tmat = zeros(5,6);
@@ -23,6 +23,7 @@ for i = 1:6
             rep = 'Experiment_1';
         case 6
             rep = 'Experiment_2';
+
     end
     if i<5
         fn = strrep(files{1},'2022-09-09',rep);
@@ -51,7 +52,7 @@ end
 
 %% Heatmap statisics
 figure('Renderer', 'painters', 'Position', [10 10 2000 800],'Color','w');
-heatmap({'9-9-22','9-19-22','10-04-22','11-15-22','Control 1','Control 2'},{'Left OFC', 'Left vlPFC','Right OFC','Right vlPFC','Speech'},1-statsmat); clim([0.95 1]);
+heatmap({'9-9-22','9-19-22','10-04-22','11-15-22','Control 1','Control 2'},{'Left VS', 'Right VS','Empty1','Empty2','Speech'},1-statsmat); clim([0.95 1]);
 title(strcat('Version: ',string(i)));
 
 %% Gather Statistics in "formt" for ease of table reporting
@@ -75,4 +76,5 @@ for i = 1:5
     end
 end
 
-save('/Users/sameerrajesh/Desktop/30Hz Project Data/Quantification/statistics.mat',"formt");
+save('/Users/sameerrajesh/Desktop/30Hz Project Data/Quantification/VSstatistics.mat',"formt");
+
