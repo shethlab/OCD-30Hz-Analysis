@@ -33,6 +33,9 @@ elseif fig_num ==2
     ii = 2;
     low = (low1+low2+clin1)/3;
     high = (high1+high2)/2;
+elseif fig_num == 1
+    ii = 1;
+    low1 = rest;
 end
 
 for i = 1:ii
@@ -89,8 +92,9 @@ xticks(ax(3),[0 10 20 30 40 50]);
 ax(1).FontSize = 14;
 ax(2).FontSize = 14;
 ax(3).FontSize = 14;
+if ~fig_num == 1
 legend(ax(1),{'Low 1','High 1','Low 2', 'High 2','Clinical'})
-
+end
 linkaxes(ax,'y')
 
 end
