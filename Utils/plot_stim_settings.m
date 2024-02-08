@@ -1,19 +1,33 @@
 function [datc,ampc] = plot_stim_settings(x,fs,dat2,task_start,task_end,hem)
 % takes in stim_log_settings =x, and fs
 % outputs time array and amp, pw, and hz
-stim_local_times = ((x.HostUnixTime)-task_start)/1000;
+stim_local_times = (x.("Unified Derived Time")-task_start)/1000;
 
-amp = str2num(char(extractBetween(x.stimParams_prog1,', ','mA')));
-pw = str2num(char(extractBetween(x.stimParams_prog1,'mA, ','us')));
-hz = str2num(char(extractBetween(x.stimParams_prog1,'us, ','Hz')));
-
-therapy_status = x.therapyStatus;
+amp = [];
+pw  = [];
+hz = [];
+for i = 1:height(x)
+    if strcmp(x{i,"Stim Settings"},'None')
+        amp(i) = nan;
+        pw(i) = nan;
+        hz(i) = nan;
+    else
+        amp(i) = str2num(char(extractBetween(x{i,"Stim Settings"},', ','mA')));
+        pw(i) = str2num(char(extractBetween(x{i,"Stim Settings"},'mA, ','us')));
+        hz(i) = str2num(char(extractBetween(x{i,"Stim Settings"},'us, ','Hz')));
+    end
+end
+therapy_status = x.("Stim Settings");
 for i = 1:length(therapy_status)
-    if therapy_status(i)==0
+    if strcmp(therapy_status{i},'None')
         amp(i)=nan;
     else
     end
 end
+
+% Therapy off with most common value
+pw(isnan(pw)) = mode(pw);
+hz(isnan(hz)) = mode(hz);
 
 %% make continuous
 ampc = nan(2*length(amp),3);
