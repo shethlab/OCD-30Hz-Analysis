@@ -130,53 +130,29 @@ h(2).FontSize = 14;
 
 %% Panel E
 fig3 = figure('Renderer', 'painters', 'Position', [10 10 2000 1200],'Color','w');
-
-% Plot Power
-h(3) = subplot(10,1,[2 3 4]);
-hold on;
-plot(pows(2).times,movavg(pows(2).value,"exponential",10),'LineStyle','-','Color','r','LineWidth',1.5);
-ylabel({'30 Hz Power', '(dB, 1/f Corrected)'})
-%ylim([3 15])
-ylim([-inf,inf])
-yticks([3,6,9,12,15]);
+h(3) = subplot(10,1,[6 7 8 9]);
+yyaxis left
+bar(pows(5).times,pows(5).value,'FaceColor',[0.8 0.8 0.9]);
 q = gca;
 q.XAxis.Visible = 'off';
-h(3).YAxis.Color = 'r';
-h(3).FontSize = 14;
-
-
-% Plot Pitch
-pitch = readmatrix([load_dir,'AudioData/PitchData.csv']);
-pitch = pitch(~isnan(pitch(:,1)),:);
-h(4) = subplot(10,1,[5 6 7]);
-%bar(pitch(:,1),pitch(:,2),'FaceColor',[0.8 0.8 0.9]);
-hold on;
-plot(pitch(:,1),movavg(pitch(:,2),'exponential',10),'Color','#77AC30','LineWidth',1.5);
-ylabel('Pitch (Hz)'); 
-h(4).YAxis.Color = '#77AC30';
-q = gca;
-q.XAxis.Visible = 'off';
-box off
-h(4).FontSize = 14;
-ylim([-inf,inf])
-
-
-% Plot Speech Rate
-
-
-h(5) = subplot(10,1,[8 9 10]);
-%bar(pows(5).times,pows(5).value,'FaceColor',[0.8 0.8 0.9]);
 hold on;
 plot(pows(5).times,movavg(pows(5).value',"exponential",5),'LineStyle','-','Color','b','LineWidth',1.5);
 q = gca;
-%q.XAxis.Visible = 'off';
-%ylim([0,8])
-ylim([-inf,inf])
-yticks([0,2,4,6])
+q.XAxis.Visible = 'off';
+ylim([0,10])
 ylabel('Words/s (Hz)')
 box off
-h(5).FontSize = 14;
-h(5).YAxis.Color = 'b';
+h(3).FontSize = 14;
+yyaxis right
+hold on;
+plot(pows(2).times,movavg(pows(2).value,"exponential",10),'LineStyle','-','Color','r','LineWidth',1.5);
+ylabel({'30 Hz Power', '(dB, 1/f Corrected)'})
+ylim([0 15])
+yticks([0,5,10,15]);
+q = gca;
+q.XAxis.Visible = 'off';
+h(3).YAxis(1).Color = 'b';
+h(3).YAxis(2).Color = 'r';
 
 
 specaxes = spectrogramPlot(amp_data.lfp(1).combinedDataTable(:,6),1,start_ind1,end_ind1,0,'Left ',{'vlPFC'},50);
@@ -184,13 +160,5 @@ xlimits = [cell2mat(xlim(h)); xlim(specaxes)];
 xupperlim = min(xlimits(:,2));
 linkaxes([specaxes,h],'x');
 xlim([0,xupperlim]);
-%%
-
 saveas(gcf,strcat(savedir,'PanelD.svg'));
 saveas(fig3,strcat(savedir,'PanelE.svg'));
-saveas(fig1,strcat(savedir,'Amplitude.svg'));
-
-
-
-
-
