@@ -1,5 +1,9 @@
 close all;
 clear all;
+
+%% Init datafolder
+datafoldername = '/Users/sameerrajesh/Desktop/30Hz Project Data/'; % replace with your folder name
+
 prompt = 'Enter date string for preprocessing (e.g. "2020-01-08"): ';
 date = input(prompt);
 if isstring(date)
@@ -17,7 +21,7 @@ end
 
 task = 'amplitude';
 
-loaddir = ['/Users/sameerrajesh/Desktop/30Hz Project Data/',date,'/AnalysisFiles/',task,'/',exp_str,'/'];
+loaddir = [datafoldername,date,'/AnalysisFiles/',task,'/',exp_str,'/'];
 
 %% Find Analysis file to load
 loadfile = [date,'_amplitude-analysis.mat'];

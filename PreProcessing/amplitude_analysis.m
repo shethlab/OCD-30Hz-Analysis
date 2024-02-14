@@ -1,5 +1,8 @@
 close all;
 clear all;
+
+%% Init datafolder
+datafoldername = '/Users/sameerrajesh/Desktop/30Hz Project Data/'; % replace with your folder name
 prompt = 'Enter date string for preprocessing (e.g. "2020-01-08"): ';
 date = input(prompt);
 if isstring(date)
@@ -17,7 +20,7 @@ end
 
 task = 'amplitude';
 
-loaddir = ['/Users/sameerrajesh/Desktop/30Hz Project Data/',date,'/PreProcessedData/',task,'/',exp_str];
+loaddir = [datafoldername,date,'/PreProcessedData/',task,'/',exp_str];
 
 %% find EEG file to load
 all_files = dir(loaddir);
