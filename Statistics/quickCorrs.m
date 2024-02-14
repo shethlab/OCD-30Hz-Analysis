@@ -1,8 +1,11 @@
 %% Compute Correlation for Power and speech
 
 %% Initialize matrices/data structures and file searching
-files = {'/Users/sameerrajesh/Desktop/30Hz Project Data/2022-09-09/AnalysisFiles/amplitude/datafile_corrected_v4.mat',
-    '/Users/sameerrajesh/Desktop/30Hz Project Data/2023-02-27/AnalysisFiles/amplitude/Experiment_1/datafile_corrected_v4.mat'};
+
+datafoldername = '/Users/sameerrajesh/Desktop/30Hz Project Data'; %Replace with your foldername
+
+files = {[datafoldername,'/2022-09-09/AnalysisFiles/amplitude/datafile_corrected_v4.mat'],
+    [datafoldername,'/2023-02-27/AnalysisFiles/amplitude/Experiment_1/datafile_corrected_v4.mat']};
 
 
 R = zeros(4,6);
@@ -95,5 +98,5 @@ for i = 1:4
         end
     end
 end
-save('/Users/sameerrajesh/Desktop/30Hz Project Data/Quantification/correlations.mat',"formt");
+save([datafoldername,'/Quantification/correlations.mat'],"formt");
 

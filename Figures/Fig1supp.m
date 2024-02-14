@@ -1,14 +1,16 @@
 close all;
 clear all;
 %% Load Files
-load_dir = '/Users/sameerrajesh/Desktop/30Hz Project Data/2023-02-27/';
+datafoldername = '/Users/sameerrajesh/Desktop/30Hz Project Data'; %Replace with your foldername
+
+load_dir = [datafoldername,'/2023-02-27/'];
 amp_analysis_file = [load_dir,'AnalysisFiles/amplitude/Experiment_1/2023-02-27_amplitude-analysis.mat'];
 textgrid = [load_dir,'AudioData/2023-02-27_audio_amplitude_Experiment1.TextGrid'];
 psdfile = [load_dir,'AnalysisFiles/amplitude/Experiment_1/2023-02-27_PSD-data_Left_v2.mat'];
 power_datafile = [load_dir,'AnalysisFiles/amplitude/Experiment_1/datafile_corrected_v4.mat'];
 
 fig_num = 2;
-savedir = '/Users/sameerrajesh/Desktop/30Hz Project Data/Figures/Figure 1 Supplement/';
+savedir = [datafoldername,'/Figures/Figure 1 Supplement/'];
 if ~isdir(savedir)
     mkdir(savedir);
 end

@@ -1,8 +1,11 @@
 %% Compute Statistics for High vs Low Amplitude
 
 %% Initialize matrices/data structures and file searching
-files = {'/Users/sameerrajesh/Desktop/30Hz Project Data/2022-09-09/AnalysisFiles/amplitude/datafile_corrected_v4.mat',
-    '/Users/sameerrajesh/Desktop/30Hz Project Data/2023-02-27/AnalysisFiles/amplitude/Experiment_1/datafile_corrected_v4.mat'};
+
+datafoldername = '/Users/sameerrajesh/Desktop/30Hz Project Data'; %Replace with your foldername
+
+files = {[datafoldername,'/2022-09-09/AnalysisFiles/amplitude/datafile_corrected_v4.mat'],
+    [datafoldername,'/2023-02-27/AnalysisFiles/amplitude/Experiment_1/datafile_corrected_v4.mat']};
 
 statsmat = zeros(5,6);
 tmat = zeros(5,6);
@@ -75,4 +78,8 @@ for i = 1:5
     end
 end
 
-save('/Users/sameerrajesh/Desktop/30Hz Project Data/Quantification/statistics.mat',"formt");
+save([datafoldername,'/Quantification/statistics.mat'],"formt");
+
+
+
+
