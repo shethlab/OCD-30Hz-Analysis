@@ -10,6 +10,7 @@ files = {[datafoldername,'/2022-09-09/AnalysisFiles/amplitude/datafile_corrected
 
 R = zeros(4,6);
 P = zeros(4,6);
+CI = zeros(4,2,6);
 
 raws = [1,0]; %[raw power, raw speech] as a binary; 0 == use EMA trace
 
@@ -60,9 +61,10 @@ for i = 1:6
         pows(5).value = zeros(size(pows(4).times));
     end
     %% Compute and Record Correlations
-    [r,p] = computeCorrs(pows,raws);
+    [r,p,ci] = computeCorrs(pows,raws);
     R(:,i) = r.*r;
     P(:,i) = p;
+    CI(:,:,i) = ci.*ci;
 
 
 end
@@ -86,14 +88,16 @@ title(tstrP);
 formt = {};
 for i = 1:4
     for j = 1:6
-        for k = 1:2
-            ind1 = 2*(i-1)+k;
+        for k = 1:3
+            ind1 = 3*(i-1)+k;
             ind2 = j;
             switch k
                 case 1
                     formt{ind1,ind2} = num2str(R(i,j), '%.3e');
                 case 2
                     formt{ind1,ind2} = num2str(P(i,j), '%.3e');
+                case 3
+                    formt{ind1,ind2} = strcat('[',num2str(CI(i,1,j), '%.3e'),', ',num2str(CI(i,2,j), '%.3e'),']');
             end
         end
     end

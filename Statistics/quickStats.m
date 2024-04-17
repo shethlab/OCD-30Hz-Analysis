@@ -11,6 +11,8 @@ statsmat = zeros(5,6);
 tmat = zeros(5,6);
 cmat = zeros(5,2,6);
 nmat = zeros(5,2,6);
+effmat = zeros(5,6);
+dofmat = zeros(5,6);
 
 for i = 1:6
     switch i
@@ -48,7 +50,8 @@ for i = 1:6
     tmat(:,i) = sm.tstat;
     cmat(:,:,i) = sm.ci;
     nmat(:,:,i) = sm.sampsz;
-
+    effmat(:,i) = sm.effectSize;
+    dofmat(:,i) = sm.dof;
 
 end
 
@@ -59,20 +62,30 @@ title(strcat('Version: ',string(i)));
 
 %% Gather Statistics in "formt" for ease of table reporting
 formt = {};
+order = {'p-value','t-stat','CI','DF','Cohen','SampSz'};
 for i = 1:5
     for j = 1:6
-        for k = 1:4
-            ind1 = 4*(i-1)+k;
+        for k = 1:6
+            ind1 = 6*(i-1)+k;
             ind2 = j;
             switch k
                 case 1
-                    formt{ind1,ind2} = num2str(statsmat(i,j), '%.3e');
+                    if statsmat(i,j) < 0.01
+                        pwr10 = ceil(log10(statsmat(i,j)));
+                        formt{ind1,ind2} = ['<10^',num2str(pwr10)];
+                    else
+                        formt{ind1,ind2} = num2str(statsmat(i,j), '%.3f');
+                    end
                 case 2
                     formt{ind1,ind2} = num2str(tmat(i,j), '%.3f');
                 case 3
                     formt{ind1,ind2} = strcat('[',num2str(cmat(i,1,j), '%.3f'),', ',num2str(cmat(i,2,j), '%.3f'),']');
-                case 4
+                case 6 %SS last
                     formt{ind1,ind2} = strcat('[',num2str(nmat(i,1,j)),', ',num2str(nmat(i,2,j)),']');
+                case 5
+                    formt{ind1,ind2} = num2str(effmat(i,j), '%.3f');
+                case 4
+                    formt{ind1,ind2} = num2str(dofmat(i,j), '%.3f');
             end
         end
     end

@@ -1,9 +1,9 @@
-function [r,p] = computeCorrs(pows,raws)
+function [r,p,ci] = computeCorrs(pows,raws)
 
 %% Empty Correlation Vectors
 r = zeros(4,1);
 p = zeros(4,1);
-
+ci = zeros(4,2);
 %% Speech Data + ema init
 datspeech = pows(5);
 try
@@ -35,9 +35,12 @@ for i = 1:4
     emaspeechds = emaspeech(sharedb);
 
     %% Corrs
-    [R,P] = corrcoef(emaneuralds,emaspeechds);
+    [R,P,RL,RU] = corrcoef(emaneuralds,emaspeechds);
     r(i) = R(1,2);
     p(i) = P(1,2);
+    ci(i,1) = RL(1,2);
+    ci(i,2) = RU(1,2);
+   
 
 end
 
