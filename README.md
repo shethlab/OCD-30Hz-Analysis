@@ -39,7 +39,7 @@ Respective version of the Signal Processing Toolbox: https://www.mathworks.com/p
 ```
 
 # Code Demo
-Demo datasets and and a script to generate demo outputs are located in the DEMO folder. Run the demo script section-by-section to view how each step of analysis is conducted. For all figures, axis and other aesthetic adjustments were completed on Adobe Illustrator. 
+Demo data is not explicitly provided for this project but can be directly requested from the lead contact. Below is a detailed description of how to obtain the various figures and tables for the project from the data once requested.
 
 
 ## 1. Data Preparation
